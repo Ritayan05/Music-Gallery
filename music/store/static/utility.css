@@ -1,0 +1,62 @@
+.border {
+    border: 2px solid var(--primary-color); /* Updated to bluish-violet */
+    margin: 3px;
+}
+
+.flex {
+    display: flex;
+}
+
+.justify-center {
+    justify-content: center;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.bg-black {
+    background-color: var(--background-color); /* Updated to dark background */
+    color: var(--text-color); /* Updated to light text */
+}
+
+.invert {
+    filter: invert(1);
+}
+
+.bg-grey {
+    background-color: var(--card-bg); /* Updated to card background color */
+}
+
+.rounded {
+    border-radius: 7px;
+}
+
+.m-1 {
+    margin: 5px;
+}
+
+.p-1 {
+    padding: 10px;
+}
+
+/* For Webkit browsers (e.g., Chrome, Safari) */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); /* Bluish-violet for the thumb */
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: var(--secondary-color); /* Darker bluish-violet for the track */
+}
+
+/* For Firefox */
+/* scrollbar-color: var(--primary-color) var(--secondary-color); */
+
+.some-class {
+    color: var(--primary-color); /* Updated to bluish-violet */
+}
