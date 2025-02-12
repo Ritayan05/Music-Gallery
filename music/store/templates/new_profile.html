@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #ffffff;
+        }
+        .profile-container {
+            background: #1e1e1e;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+            width: 350px;
+            text-align: center;
+        }
+        .profile-container img {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 10px;
+        }
+        .profile-container h2 {
+            margin: 10px 0;
+        }
+        .profile-container p {
+            color: #b3b3b3;
+        }
+        .btn {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #a46bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn:hover {
+            background: #ff4040;
+        }
+        .content {
+            display: none;
+            margin-top: 20px;
+            text-align: left;
+        }
+        .active {
+            display: block;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            color: #ffffff;
+        }
+        .form-group input, .form-group select {
+            width: 100%;
+            padding: 8px;
+            margin-top: 5px;
+            border: 1px solid #ff6b6b;
+            border-radius: 5px;
+            background: #2a2a2a;
+            color: white;
+        }
+        .history-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        .history-list li {
+            background: #2a2a2a;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            color: #ffffff;
+        }
+    </style>
+    <script>
+        function showContent(section) {
+            document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
+            document.getElementById(section).classList.add('active');
+        }
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+    </script>
+</head>
+<body>
+    <div class="profile-container">
+        <img id="profileImage" src="https://via.placeholder.com/100" alt="User Avatar">
+        <input type="file" id="imageInput" accept="image/*" onchange="previewImage(event)">
+        <h1>Welcome, {{ user }}!</h1>
+        <button class="btn" onclick="showContent('updateProfile')">Update Profile</button>
+        <button class="btn" onclick="window.location.href='playlists';">My Playlist</button>
+        <button class="btn" onclick="window.location.href='suggested_songs';">Suggested Songs</button>
+        <button class="btn" onclick="showContent('settings')">Settings</button>
+
+        <div id="updateProfile" class="content">
+            <h3>Update Profile</h3>
+            <form action="update">
+                <div class="form-group">
+                    <label for="name">Username:</label>
+                    <input type="text" id="name" name="username" value="John Doe">
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" value="johndoe@example.com">
+                </div>
+                <div class="form-group">
+                    <label for="genres">Favorite Genres:</label>
+                    <input type="text" id="genres" name="genres" value="Rock, Jazz, Classical">
+                </div>
+                <div class="form-group">
+                    <label for="artists">Favorite Artists:</label>
+                    <input type="text" id="artists" name="artists" value="Artist 1, Artist 2">
+                </div>
+                <button type="submit" class="btn">Save Changes</button>
+            </form>
+        </div>
+        <div id="settings" class="content">
+            <h3>Settings</h3>
+            <form>
+                <div class="form-group">
+                    <label for="notifications">Email Notifications:</label>
+                    <select id="notifications">
+                        <option value="enabled">Enabled</option>
+                        <option value="disabled">Disabled</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="privacy">Privacy Settings:</label>
+                    <select id="privacy">
+                        <option value="public">Public</option>
+                        <option value="private">Private</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn">Save Settings</button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

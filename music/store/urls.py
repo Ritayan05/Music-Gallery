@@ -14,11 +14,13 @@ urlpatterns=[
     path('reg',views.reg),
     path('profile',views.profile),
     path('update',views.update),
+    path('upd',views.upd),
     path('profile/', views.profile, name='profile'),  # Profile page URL
     # path('custom-admin/', admin_dashboard, name='custom-admin'),
     # path('login/',auth_views.LoginView(),name='login'),
     #  path("search/", search_songs, name="search_songs"),
-
+    # path('show',views.show),
+    # path("account/", account_details, name="account"),
 
     path('playlists/', views.playlists, name='playlists'),
     path('create_playlist/', views.create_playlist, name='create_playlist'),

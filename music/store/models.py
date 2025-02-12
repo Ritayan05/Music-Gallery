@@ -53,3 +53,9 @@ class updateprofile(models.Model):
     artists = models.TextField(help_text="Comma-separated artist names")
     class Meta:
         db_table="updateprofile"
+
+class picfile(models.Model):
+    # pname=models.CharField(max_length=50)
+    purl=models.ImageField(upload_to='upload/')
+    class Meta:
+        db_table="picfile"

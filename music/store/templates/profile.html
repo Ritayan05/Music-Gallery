@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>User Profile</title>
     <style>
-        body {
+              body {
             font-family: Arial, sans-serif;
             background-color: #121212;
             margin: 0;
@@ -28,6 +28,8 @@
             width: 100px;
             height: 100px;
             border-radius: 50%;
+            display: block;
+            margin: 0 auto 10px;
         }
         .profile-container h2 {
             margin: 10px 0;
@@ -92,15 +94,31 @@
             document.querySelectorAll('.content').forEach(div => div.classList.remove('active'));
             document.getElementById(section).classList.add('active');
         }
+        function previewImage(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('profileImage').src = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+        
     </script>
 </head>
 <body>
     <div class="profile-container">
-        <img src="https://via.placeholder.com/100" alt="User Avatar">
+        <!-- <img src="https://via.placeholder.com/100" alt="User Avatar"> -->
+        <form action="upd" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+        <img id="profileImage" src="https://via.placeholder.com/100" alt="User Avatar">
+        <input type="file" name="a1" id="imageInput" accept="image/*" onchange="previewImage(event)">
+        </form>
         <!-- <h2>John Doe</h2> -->
         <h1>Welcome, {{ user }}!</h1>  <!-- Display the username -->
-        <p>Favorite Genres: Rock, Jazz, Classical</p>
-        <p>Favorite Artists: Artist 1, Artist 2</p>
+        <!-- <p>Favorite Genres: Rock, Jazz, Classical</p>
+        <p>Favorite Artists: Artist 1, Artist 2</p> -->
         <button class="btn" onclick="showContent('updateProfile')">Update Profile</button>
         <!-- <button class="btn" onclick="showContent('myPlaylist')">My Playlist</button> -->
         <button class="btn" onclick="window.location.href='playlists';">

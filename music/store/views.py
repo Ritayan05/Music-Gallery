@@ -7,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import PlaylistForm, SongForm
 # from django.contrib.auth.hashers import make_password
 from store.models import *
+import os
 # from .models import Song, Playlist, User
 # Create your views here.
 
@@ -149,3 +150,30 @@ def remove_song(request, song_id):
     song.delete()
     messages.success(request, "Song removed from playlist!")
     return redirect('view_playlist', playlist_id=song.playlist.id)
+
+def handle_upd(file,filename):
+    if not os.path.exists('store/static/upload/'):
+        os.mkdir('store/static/upload/')
+    with open('store/static/upload/'+filename,'wb+') as dest:
+        for c in file.chunks():
+            dest.write(c)
+
+def upd(request):
+    if request.method=='POST':
+        handle_upd(request.FILES['a1'],str(request.FILES['a1']))
+        url="upload/"+str(request.FILES['a1'])
+        u=picfile()
+        # u.pname=request.POST['a1']
+        u.purl=url
+        u.save()
+        return redirect("../upload")
+    
+# def show(request):
+#     a=user1.objects.all()
+#     return render(request,'show.html',{'x':a})
+
+# @login_required  # Ensures only logged-in users can access
+# def account_details(request):
+#     user = request.user  # Get the currently logged-in user
+#     user_data = user1.objects.filter(user=user)  # Fetch user's data
+#     return render(request, "account_details.html", {"x": user_data})
