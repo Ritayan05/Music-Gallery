@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-center">🔥 Suggested Songs</h2>
+
+<div class="row mt-4">
+    {% for song in songs %}
+    <div class="col-md-3">
+        <div class="card-custom p-3">
+            <h3>{{ song.title }}</h3>
+            <p>🎤 {{ song.artist }}</p>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

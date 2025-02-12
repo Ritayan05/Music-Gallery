@@ -1,0 +1,27 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-center">🎵 {{ playlist.name }}</h2>
+<div class="text-center">
+    <a href="{% url 'add_song' playlist.id %}" class="btn btn-custom">➕ Add Songs</a>
+</div>
+
+{% if songs %}
+<div class="row mt-4">
+    {% for song in songs %}
+    <div class="col-md-4">
+        <div class="card-custom p-3">
+            <h4>{{ song.title }}</h4>
+            <p>🎤 {{ song.artist }}</p>
+            <audio controls>
+                <source src="{{ song.audio_file.url }}" type="audio/mpeg">
+                Your browser does not support the audio tag.
+            </audio>
+            <a href="{% url 'remove_song' song.id %}" class="btn btn-danger mt-2">❌ Remove</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% else %}
+<p class="text-center">No songs in this playlist yet.</p>
+{% endif %}
+{% endblock %}

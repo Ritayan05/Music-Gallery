@@ -45,6 +45,27 @@ body {
     font-weight: bold;
 }
 
+/* .home ul li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    list-style: none;
+    padding: 14px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.home ul li i {
+    font-size: 20px;
+    color: var(--text-color);
+    transition: color 0.3s ease-in-out;
+}
+
+.home ul li:hover i {
+    color: var(--primary-color);
+} */
+
+
 .heading {
     display: flex;
     gap: 15px;
@@ -94,18 +115,39 @@ body {
     padding: 20px;
 }
 
-.spotifyPlaylists {
+/* .spotifyPlaylists {
     padding: 16px;
+}*/
+
+
+.cardContainer {
+    display: flex;
+    justify-content: space-around; /* Evenly spaces items */
+    flex-wrap: wrap; /* Ensures responsiveness */
+    gap: 20px; /* Adds spacing between cards */
 }
 
+.playlist-card {
+    text-align: center;
+    width: 150px; /* Adjust width as needed */
+}
+
+.playlist-card img {
+    width: 100%;
+    border-radius: 10px; /* Adds rounded corners */
+    transition: transform 0.3s ease-in-out;
+}
+
+.playlist-card img:hover {
+    transform: scale(1.1); /* Slight zoom effect on hover */
+}
 .spotifyPlaylists h1 {
     padding: 16px;
-}
-
+} 
 .cardContainer {
     margin: 30px;
     display: flex;
-    gap: 10px;
+    gap: 100px;
     flex-wrap: wrap;
     overflow-y: auto;
     max-height: 60vh;
@@ -324,6 +366,7 @@ body {
     width: 100%;
 }
 
+
 @media (max-width: 1200px) {
     .left {
         position: absolute;
@@ -473,4 +516,23 @@ body {
     color: var(--hover-color);
     text-decoration: none;
     cursor: pointer;
+}
+i {
+    font-size: 18px; /* Adjust size */
+    color: var(--text-color); /* Match theme color */
+    margin-right: 8px; /* Add space between icon and text */
+    display: inline-block; /* Ensure proper alignment */
+    vertical-align: middle; /* Align with text */
+}
+
+/* Specific styles for sidebar icons */
+.home ul li i {
+    font-size: 20px; /* Slightly larger for sidebar */
+    color: var(--hover-color); /* Make it stand out */
+    transition: color 0.3s ease-in-out;
+}
+
+/* Hover effect for the list items */
+.home ul li:hover i {
+    color: var(--primary-color); /* Change color on hover */
 }

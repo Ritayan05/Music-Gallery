@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="text-center">My Playlists</h2>
+<div class="text-center">
+        <a href="{% url 'create_playlist' %}" class="btn btn-custom">➕ Create New Playlist</a>
+</div>
+
+<div class="row mt-4">
+    {% for playlist in playlists %}
+    <div class="col-md-4">
+        <div class="card-custom p-3 text-center">
+            
+            <a href="{% url 'view_playlist' playlist.id %}" class="btn btn-custom btn-lg w-100">
+                {{ playlist.name }} 🎵
+            </a>
+            <a href="{% url 'add_song' playlist.id %}" class="btn btn-secondary mt-2">➕ Add Songs</a>
+            <a href="{% url 'edit_playlist' playlist.id %}" class="btn btn-warning mt-2">✏️ Edit</a>
+            <a href="{% url 'delete_playlist' playlist.id %}" class="btn btn-danger mt-2">🗑️ Delete</a>
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
+

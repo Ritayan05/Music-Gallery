@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     {% load static %}
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css"> -->
     <link rel="stylesheet" href="{% static 'style.css' %}">
     <link rel="stylesheet" href="{% static 'utility.css' %}">
     <title>Music Gallery: Music for everyone</title>
@@ -19,6 +20,8 @@
             <div class="home bg-grey rounded m-1 p-1">
                 <div class="logo"><image width="110" class="invert" src="{% static 'image/logo.svg' %}" alt=""></image></div>
                 <ul>
+                    <!-- <li><i class="fa-regular fa-user"></i>Profile</li> -->
+
                     <li><image class="invert" src="{% static 'image/home.svg' %}" alt="home"></image>Home</li>
                     <!-- <li><image class="invert" src="{% static 'image/search.svg' %}" alt="home"></image>Search</li> -->
                     <li onclick="openSearchModal()">
@@ -79,13 +82,27 @@
                 <div class="buttons">
                     <!-- <button class="signupbtn">Sign up</button> -->
                     <!-- <button class="loginbtn">Log in</button> -->
-                    <button class="loginbtn" onclick="window.location.href='login';">Log in</button>
+                    <button class="loginbtn" onclick="window.location.href='profile';">Profile</button>
 
                 </div>
             </div>
             <div class="spotifyPlaylists">
-                <h1>Your Playlists</h1>
-                <div class="cardContainer"></div>
+                <h1>Trending Playlists</h1>
+                <!-- <div class="cardContainer"></div> -->
+                <div class="cardContainer">
+                    <div class="playlist-card" data-index="0">
+                        <img src="{% static 'image/cover.jpg' %}" width="120px" alt="Playlist 1">
+                        <p>Chill Vibes</p>
+                    </div>
+                    <div class="playlist-card" data-index="1">
+                        <img src="{% static 'image/cover1.jpg' %}" width="120px" alt="Playlist 2">
+                        <p>Rock Classics</p>
+                    </div>
+                    <div class="playlist-card" data-index="2">
+                        <img src="{% static 'image/cover2.jpg' %}" width="120px" alt="Playlist 3">
+                        <p>Diljit Top</p>
+                    </div>
+                </div>
 
                 <div class="playbar">
                     <div class="seekbar">
@@ -122,27 +139,22 @@
     <!-- <script src="{% static 'script.js' %}"></script>  -->
     <script >
         
-const playlist = [
-    {
-        title: 'Song 1',
-        artist: 'Artist 1',
-        image: '{% static "image/chill.jpg" %}',
-        audio: '{% static "audio/song1.mp3" %}',
-    },
-    {
-        title: 'Song 2',
-        artist: 'Artist 2',
-        image: '{% static "image/chill.jpg" %}',
-        audio: '{% static "audio/song2.mp3" %}',
-    },
-    {
-        title: 'Song 3',
-        artist: 'Artist 3',
-        image: '{% static "image/asteroid.png" %}',
-        audio: '{% static "audio/song3.mp3" %}',
-    }
+        const playlists = [
+    [
+        { title: 'Chill Song 1', artist: 'Chill Artist 1', image: '{% static "image/chill.jpg" %}', audio: '{% static "audio/song1.mp3" %}' },
+        { title: 'Chill Song 2', artist: 'Chill Artist 2', image: '{% static "image/chill.jpg" %}', audio: '{% static "audio/song2.mp3" %}' }
+    ],
+    [
+        { title: 'Rock Song 1', artist: 'Rock Artist 1', image: '{% static "image/cover1.jpg" %}', audio: '{% static "audio/song2.mp3" %}' },
+        { title: 'Rock Song 2', artist: 'Rock Artist 2', image: '{% static "image/cover1.jpg" %}', audio: '{% static "audio/song3.mp3" %}' }
+    ],
+    [
+        { title: 'Jazz Song 1', artist: 'Jazz Artist 1', image: '{% static "image/jazz.jpg" %}', audio: '{% static "audio/jazz1.mp3" %}' },
+        { title: 'Jazz Song 2', artist: 'Jazz Artist 2', image: '{% static "image/jazz.jpg" %}', audio: '{% static "audio/jazz2.mp3" %}' }
+    ]
 ];
 
+const playlistCards = document.querySelectorAll('.playlist-card');
 const playlistContainer = document.getElementById('playlist');
 const playButton = document.getElementById('play');
 const previousButton = document.getElementById('previous');
@@ -150,19 +162,26 @@ const nextButton = document.getElementById('next');
 const currentSongTitle = document.getElementById('currentSongTitle');
 const currentSongArtist = document.getElementById('currentSongArtist');
 const audioElement = new Audio();
-
+let currentPlaylist = [];
 let currentSongIndex = 0;
 
 function loadSong(songIndex) {
-    const song = playlist[songIndex];
+    const song = currentPlaylist[songIndex];
     currentSongTitle.textContent = song.title;
     currentSongArtist.textContent = song.artist;
     audioElement.src = song.audio;
-    document.getElementById('playlist').innerHTML = `
-        <li>
-            <image class="invert" src="${song.image}" alt="song-image" width="50"> ${song.title}
+    playlistContainer.innerHTML = currentPlaylist.map((song, index) => `
+        <li onclick="playSong(${index})">
+            <img class="invert" src="${song.image}" alt="song-image" width="50"> ${song.title}
         </li>
-    `;
+    `).join('');
+}
+
+function playSong(index) {
+    currentSongIndex = index;
+    loadSong(currentSongIndex);
+    audioElement.play();
+    playButton.src = "{% static 'image/pause.svg' %}";
 }
 
 function playPauseSong() {
@@ -176,28 +195,39 @@ function playPauseSong() {
 }
 
 function nextSong() {
-    currentSongIndex = (currentSongIndex + 1) % playlist.length;
+    currentSongIndex = (currentSongIndex + 1) % currentPlaylist.length;
     loadSong(currentSongIndex);
     audioElement.play();
 }
 
 function previousSong() {
-    currentSongIndex = (currentSongIndex - 1 + playlist.length) % playlist.length;
+    currentSongIndex = (currentSongIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
     loadSong(currentSongIndex);
     audioElement.play();
 }
 
-audioElement.addEventListener('ended', nextSong);
+playlistCards.forEach((card) => {
+    card.addEventListener('click', function () {
+        const index = parseInt(this.getAttribute('data-index'));
+        currentPlaylist = playlists[index];
+        currentSongIndex = 0;
+        loadSong(currentSongIndex);
+        audioElement.play();
+    });
+});
 
+audioElement.addEventListener('ended', nextSong);
 playButton.addEventListener('click', playPauseSong);
 nextButton.addEventListener('click', nextSong);
 previousButton.addEventListener('click', previousSong);
 
-loadSong(currentSongIndex);
+// Load the first song initially
+audioElement.src = playlists[0][0].audio;
+currentPlaylist = playlists[0];
+loadSong(0);
 
     </script> 
-    <script src="{% static 'script1.js' %}"></script> 
-
+    <script src="{% static 'script1.js' %}"></script>
 </body>
 
 </html>
